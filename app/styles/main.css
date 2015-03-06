@@ -136,6 +136,27 @@ body.wall-display {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.wall-display ul.pulls li.status {
+  background-color: #202831 !important;
+}
+
+.wall-display li.status .avatar {
+  border: 12px solid transparent;
+}
+
+.wall-display li.status.success .avatar {
+  border-color: #6cc644;
+}
+
+.wall-display li.status.failure .avatar,
+.wall-display li.status.error .avatar {
+  border-color: #ac3939;
+}
+
+.wall-display li.status.pending .avatar {
+  border-color: #cea61b;
+}
+
 .wall-display ul.pulls li .avatar {
   border-radius: 50%;
   height: 5.25em;
