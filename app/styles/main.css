@@ -173,6 +173,23 @@ body.wall-display {
   font-size: 1.5em;
 }
 
+.wall-display .statuses {
+  font-size: 0.5em;
+}
+
+.wall-display .statuses.success {
+  color: #6cc644;
+}
+
+.wall-display .statuses.pending {
+  color: #cea61b;
+}
+
+.wall-display .statuses.failure,
+.wall-display .statuses.error{
+  color: #ac3939;
+}
+
 .wall-display .repo {
   font-size: 1.2em;
 }

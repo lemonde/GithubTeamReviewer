@@ -67,7 +67,29 @@ angular.module('gtrApp')
 
       var addStatusToPull = function (pull) {
         return request(pull.statuses_url).then(function (response) {
-          pull.statuses = response.data;
+          pull.statuses = new Array();
+
+          var i = 0;
+          var last;
+          response.data.forEach(function(statuses) {
+            if (i < 2) {
+
+              if (statuses.context.indexOf("travis-ci") > -1  && last != 'travis') {
+                statuses.context = "Travis";
+                last = 'travis';
+                pull.statuses.push(statuses);
+                i++;
+              }
+
+              if (statuses.context.indexOf("Scrutinizer") > -1 && last != 'scruti') {
+                statuses.context = "Scrutinizer";
+                last = 'scruti';
+                pull.statuses.push(statuses);
+                i++;
+              }
+            }
+
+          });
         });
       };
 
@@ -77,10 +99,18 @@ angular.module('gtrApp')
         });
       };
 
+      var addCommentsToPull = function (pull) {
+        return request(pull.comments_url).then(function (response) {
+          pull.comments = response.data.comments.length;
+        });
+      };
+
       var getRepoPulls = function (repo) {
         return request(repo.pulls_url.replace('{/number}', ''))
           .then(function (response) {
             var filtered = response.data.filter(filterPulls);
+
+            return $q.all(filtered.map(addCommentsToPull));
 
             return $q.all(filtered.map(addStatusToPull)).then(function() {
               if (!config.fetchAndDisplayTags) {

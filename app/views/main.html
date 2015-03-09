@@ -30,6 +30,8 @@
             <div class="labels">
                 <span ng-if="!pr.labels.length && fetchAndDisplayTags">&nbsp;</span>
                 <span class="label" ng-repeat="label in pr.labels" ng-style="{'background-color': '#' + label.color, 'color': '#' + getVisibleTextColor(label.color)}">{{label.name}}</span>
+                <span class="statuses" ng-repeat="status in pr.statuses" ng-class="status.state">{{ status.context }}</span>
+                <span>{{ pr.comments }}</span>
             </div>
             <div class="repo"><a ng-href="{{pr.head.repo.html_url}}" >{{ pr.head.repo.name }}</a></div>
         </li>
