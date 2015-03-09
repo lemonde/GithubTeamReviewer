@@ -101,7 +101,7 @@ angular.module('gtrApp')
 
       var addCommentsToPull = function (pull) {
         return request(pull.comments_url).then(function (response) {
-          pull.comments = response.data.comments.length;
+          pull.comments = response.data.length;
         });
       };
 
@@ -110,14 +110,16 @@ angular.module('gtrApp')
           .then(function (response) {
             var filtered = response.data.filter(filterPulls);
 
-            return $q.all(filtered.map(addCommentsToPull));
-
             return $q.all(filtered.map(addStatusToPull)).then(function() {
               if (!config.fetchAndDisplayTags) {
                 return;
               }
+
               return $q.all(filtered.map(addLabelsToPull));
             }).then(function() {
+              return $q.all(filtered.map(addCommentsToPull));
+            })
+            .then(function() {
               return filtered;
             });
           });
