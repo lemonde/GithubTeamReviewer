@@ -21,6 +21,12 @@ angular.module('gtrApp')
             authHeader = {'Authorization': 'token ' + team.token};
           }
 
+          if (team.tokens) {
+            var tokenNum = Math.floor(Math.random() * team.tokens.length);
+
+            authHeader = {'Authorization': 'token ' + team.tokens[tokenNum]};
+          }
+
           // Empty pulls object
           for (var id in this.pulls) {
             delete this.pulls[id];
